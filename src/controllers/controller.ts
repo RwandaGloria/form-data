@@ -73,7 +73,7 @@ export default class UserController {
     static getSingleUser = async (req: Request, res: Response) => {
         try {
             const { userId } = req.query;
-            const getUser = await User.findByIdAndDelete(userId);
+            const getUser = await User.findById(userId);
 
             if(!getUser) {
                 return out(res, 404, {}, "No user data found", undefined);
