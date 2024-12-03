@@ -7,6 +7,7 @@ export default class Validation {
   private readonly userIdValidationSchema: Joi.Schema;
   private readonly createUserSchema: Joi.Schema;
   private readonly updateUserSchema: Joi.Schema;
+  private readonly getSingleUserSchema: Joi.Schema;
 
   constructor() {
     
@@ -32,6 +33,11 @@ export default class Validation {
         comments: Joi.string().optional().max(500).label("comments"),
         department: Joi.string().valid(...Object.values(Department)).required().label("department"),
     });
+
+    this.getSingleUserSchema =  Joi.object({
+      userId: Joi.string().label("userId").length(24)
+
+    })
   }
 
 
@@ -44,5 +50,8 @@ export default class Validation {
   };
   validateUpdateUser = (req: Request, res: Response, next: NextFunction): void => {
     validation(this.updateUserSchema, req.body, res, next);
+  };
+  validateGetSingleUser = (req: Request, res: Response, next: NextFunction): void => {
+    validation(this.getSingleUserSchema, req.query, res, next);
   };
 }

@@ -9,6 +9,6 @@ userRouter.post("/add", [validation.validateCreateUser, UserController.createUse
 userRouter.get("/list", UserController.getAllUserData);
 userRouter.patch("/update", [validation.validateUpdateUser, UserController.updateUserData]);
 userRouter.delete("/remove", [validation.validateDeleteUser, UserController.deleteUser])
-
+userRouter.get("/find", [validation.validateGetSingleUser], UserController.getSingleUser);
 
 export default userRouter;

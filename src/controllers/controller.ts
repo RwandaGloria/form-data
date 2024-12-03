@@ -69,4 +69,21 @@ export default class UserController {
             return out(res, 500, undefined, "Failed to delete user", `${UserController.errorCode}4-0`);
         }
     };
+
+    static getSingleUser = async (req: Request, res: Response) => {
+        try {
+            const { userId } = req.query;
+            const getUser = await User.findByIdAndDelete(userId);
+
+            if(!getUser) {
+                return out(res, 404, {}, "No user data found", undefined);
+            }
+            io.emit("userGotten", getUser); 
+
+            return out(res, 200, getUser, "User fetched successfully", undefined);
+        } catch (error: any) {
+            logger.error(error);
+            return out(res, 500, undefined, "Failed to get user", `${UserController.errorCode}5-0`);
+        }
+    };
 }
